@@ -3,7 +3,7 @@ import dataSlice from './slices/ticketSlice';
 
 export const store = configureStore({
     reducer: {
-        dataTicket: dataSlice,
+        dataTickets: dataSlice,
     }
 });
 

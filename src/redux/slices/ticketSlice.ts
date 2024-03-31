@@ -1,39 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { ITicket } from '../../types/ticketsType';
 import { fetchUsers } from '../../data';
 
 export const fetchUsersAsync = createAsyncThunk(
     'users/fetchUsers',
     async () => {
         const response = await fetchUsers();
+        console.log(response);
         return response;
     }
 );
 
-export interface TicketTime {
-    startTime: string;
-    endTime: string;
-}
-
-export interface Ticket {
-    id: number;
-    from: string;
-    to: string;
-    company: string;
-    price: number;
-    currency: 'RUB';
-    time: TicketTime;
-    duration: number;
-    connectionAmount: number | null;
-}
-
 const dataSlice = createSlice({
-    name: 'users',
+    name: 'tickets',
     initialState: {
-      users: [] as Ticket[],
-      status: 'idle',
-      error: '',
+        tickets: [] as ITicket[],
+        filteredTickets: [] as ITicket[],
+        status: 'idle',
+        error: '',
     },
-    reducers: {},
+    reducers: {
+        sortTickets(state) {
+          state.filteredTickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
+        },
+        filterTicketsByCompany(state, action) {
+          state.filteredTickets = state.tickets.filter(ticket => ticket.company === action.payload);
+        },
+      },
     extraReducers: (builder) => {
         builder
             .addCase(fetchUsersAsync.pending, (state) => {
@@ -41,7 +34,7 @@ const dataSlice = createSlice({
             })
             .addCase(fetchUsersAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.users = action.payload as Ticket[];
+                state.tickets = [...state.tickets, ...action.payload as ITicket[]];
             })
             .addCase(fetchUsersAsync.rejected, (state, action) => {
                 state.status = 'failed';
@@ -49,5 +42,7 @@ const dataSlice = createSlice({
             });
     },
 });
+
+export const { sortTickets, filterTicketsByCompany } = dataSlice.actions;
 
 export default dataSlice.reducer;

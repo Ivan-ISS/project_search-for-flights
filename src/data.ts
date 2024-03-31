@@ -1,21 +1,5 @@
 import getRandom from './utils/getRandomNumber';
-
-export interface TicketTime {
-    startTime: string;
-    endTime: string;
-}
-
-export interface Ticket {
-    id: number;
-    from: string;
-    to: string;
-    company: string;
-    price: number;
-    currency: 'RUB';
-    time: TicketTime;
-    duration: number;
-    connectionAmount: number | null;
-}
+import { ITicket } from './types/ticketsType';
 
 // const airportNames = [
 //     { name: 'SVO'},
@@ -23,22 +7,24 @@ export interface Ticket {
 
 // ];
 
-const tickets: Ticket[] = [];
+// const tickets: ITicket[] = [];
 
-const companyNames: string[] = [ 'Победа', 'Red Wings', 'S7 Airlines' ];
+let idCounter = 0;
+
+const companyNames = [ 'Победа', 'Red Wings', 'S7 Airlines' ];
 const minPrice: number = 2000;
 const maxPrice: number = 80000;
 
-const ticketGeneration = (): Ticket => {
+const ticketGeneration = (): ITicket => {
     return (
         {
-            id: tickets.length + 1,
+            id: idCounter,
             from: 'SVO',
             to: 'LED',
-            company: companyNames[getRandom(0, companyNames.length)],
+            company: companyNames[getRandom(0, companyNames.length - 1)],
             price: getRandom(minPrice, maxPrice),
             currency: 'RUB',
-            time: { startTime: '4:30',  endTime: '6:30'},
+            time: { startTime: '4:30',  endTime: '6:30' },
             duration: 2,
             connectionAmount: getRandom(0, 3),
         }
@@ -46,40 +32,24 @@ const ticketGeneration = (): Ticket => {
 };
 
 const getTickets = (numberOfTickets: number) => {
-    for (let i =0; i < numberOfTickets; i++) { 
-        tickets.push(ticketGeneration());
+    const newTickets: ITicket[] = [];
+    for (let i = 0; i < numberOfTickets; i++) {
+        idCounter++;
+        newTickets.push(ticketGeneration());
     }
-    return tickets;
+    return newTickets;
 };
 
-export const fakeDataTickets = {
-    tickets: getTickets(3)
+export const fakeData = (numberOfTickets: number) => {
+    return {
+        tickets: getTickets(numberOfTickets)
+    };
 };
 
-// interface IUsers {
-//     id: number;
-//     name: string
-// }
-
-// interface IFakeData {
-//     [key: string]: IUsers[]
-// }
-
-// const fakeData: IFakeData = {
-//     users: [
-//       { id: 1, name: 'User 1' },
-//       { id: 2, name: 'User 2' },
-//       { id: 3, name: 'User 3' },
-//       { id: 4, name: 'User 4' },
-//       { id: 5, name: 'User 5' },
-//       { id: 6, name: 'User 6' },
-//     ],
-// };
-  
 export const fetchUsers = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
-        resolve(fakeDataTickets.tickets);
+            resolve(fakeData(6).tickets);
         }, 1000);
     });
 };
