@@ -16,6 +16,10 @@ function App() {
         dispatch(fetchUsersAsync());
     }, [dispatch]);
 
+    useEffect(() => {
+      dispatch(filterTicketsByCompany('S7 Airlines'));
+    }, [data]);
+
   return (
       <div className="App">
           <ul>
