@@ -3,8 +3,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector/* , TypedUseSelectorHook */ } from 'react-redux';
 import { RootState, RootDispatch } from './redux/store';
 import { fetchUsersAsync, filterTicketsByCompany, sortTickets } from './redux/slices/ticketSlice';
-import './App.css';
-// import style from './App.module.scss';
+// import './App.css';
+import styles from './App.module.scss';
+
+import Layout from './components/Layout/layout';
+import Header from './components/Header/header';
+import Main from './components/Main/main';
+import Footer from './components/Footer/footer';
 
 function App() {
     const dispatch = useDispatch<RootDispatch>();
@@ -21,7 +26,7 @@ function App() {
     }, [data]);
 
   return (
-      <div className="App">
+      <div className={styles.app}>
           <ul>
               {data.map(item => (
               <li key={item.id}>{item.company} {item.price} {item.id}</li>
@@ -54,7 +59,12 @@ function App() {
                 ))}
             </ul>
           </p>
-          
+
+          <Layout
+              HeaderComponent={<Header />}
+              MainComponent={<Main ticketData={data}/>}
+              FooterComponent={<Footer />}
+          />
       </div>
   );
 }

@@ -14,6 +14,6 @@
     font-weight: 700;
     font-display: swap;
     src: local("Roboto"),
-             url("Inter-Medium.woff2") format("woff2"),
-             url("Inter-Medium.woff") format("woff");
+             url("Inter-Bold.woff2") format("woff2"),
+             url("Inter-Bold.woff") format("woff");
 }

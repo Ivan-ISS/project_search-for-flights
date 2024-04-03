@@ -1,0 +1,18 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+.block {
+    padding: 19px 19px 50px 19px;
+    border-radius: 10px;
+    background: $base-gray;
+}
+
+.title {
+    color: $base-purple;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.body {
+    padding: 27px 23px 0 23px;
+}

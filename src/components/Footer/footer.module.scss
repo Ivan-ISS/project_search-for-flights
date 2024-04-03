@@ -1,0 +1,13 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+.footer {
+    width: 100%;
+    border-top: 1px solid $base-purple;
+
+    .container {
+        max-width: 1050px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}

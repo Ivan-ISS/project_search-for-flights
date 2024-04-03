@@ -1,0 +1,11 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+.buttonGroup {
+    border-radius: 10px;
+    overflow: hidden;
+
+    display: flex;
+    outline: 2px solid $base-purple;
+    outline-offset: -1px;
+}

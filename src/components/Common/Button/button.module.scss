@@ -1,0 +1,46 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+
+.button {
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-family: "Inter", "helvetica", "arial", "verdana", "sans-serif";
+    font-weight: 700;
+    border: 1px solid $base-purple;
+}
+
+.rounded {
+    border-radius: 10px;
+}
+
+.purple {
+    background: $base-purple;
+    color: $base-white;
+
+    &:hover {
+        background: $base-gray;
+        color: $base-purple;
+    }
+}
+
+.gray {
+    background: $base-gray;
+    color: $base-purple;
+
+    &:hover {
+        background: $base-purple;
+        color: $base-white;
+    }
+}
+
+.small {
+    padding: 13px;
+    font-size: $font-size-mobile;
+}
+
+.large {
+    padding: 17px;
+    font-size: $font-size-base;
+}
