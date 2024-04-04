@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ITicket } from '../../types/ticketsType';
 import { fetchUsers } from '../../data';
 
-export const fetchUsersAsync = createAsyncThunk(
+export const fetchTicketsAsync = createAsyncThunk(
     'users/fetchUsers',
     async () => {
         const response = await fetchUsers();
@@ -20,23 +20,31 @@ const dataSlice = createSlice({
         error: '',
     },
     reducers: {
-        sortTickets(state) {
-          state.filteredTickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
+        sortTicketsPrice(state) {
+                state.tickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
+        },
+        sortTickets(state, action) {
+            if (action.payload === 'Самый дешевый') {
+                state.tickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
+            }
+            if (action.payload === 'Самый оптимальный') {
+                state.tickets = state.tickets.slice().sort((a, b) => a.connectionAmount - b.connectionAmount) as ITicket[];
+            }
         },
         filterTicketsByCompany(state, action) {
-          state.filteredTickets = state.tickets.filter(ticket => ticket.company === action.payload);
+            state.filteredTickets = state.tickets.filter(ticket => ticket.company === action.payload);
         },
       },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchUsersAsync.pending, (state) => {
+            .addCase(fetchTicketsAsync.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(fetchUsersAsync.fulfilled, (state, action) => {
+            .addCase(fetchTicketsAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.tickets = [...state.tickets, ...action.payload as ITicket[]];
             })
-            .addCase(fetchUsersAsync.rejected, (state, action) => {
+            .addCase(fetchTicketsAsync.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ? action.error.message : '';
             });

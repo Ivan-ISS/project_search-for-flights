@@ -9,14 +9,18 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
     size: Size,
     color: Color,
     border?: 'rounded',
+    sort?: string;
+    setSort?: (sort: string) => void,
 }
 
-const Button = ({ size = 'large', color = 'gray', border, children, ...props }: ButtonProps): JSX.Element => {
+const Button = ({ size = 'large', color = 'gray', border, children, sort, setSort, ...props }: ButtonProps): JSX.Element => {
 
     const onClickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (props.onClick) {
             props.onClick(e);
             console.log(e);
+            console.log(sort);
+            if (sort && setSort) setSort(sort);
         }
     };
 

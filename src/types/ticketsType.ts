@@ -12,5 +12,5 @@ export interface ITicket {
     currency: 'RUB';
     time: ITicketTime;
     duration: number;
-    connectionAmount: number | null;
+    connectionAmount: number /* | null */;
 }

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 // import viteLogo from '/vite.svg';
 import { useDispatch, useSelector/* , TypedUseSelectorHook */ } from 'react-redux';
 import { RootState, RootDispatch } from './redux/store';
-import { fetchUsersAsync, filterTicketsByCompany, sortTickets } from './redux/slices/ticketSlice';
+import { fetchTicketsAsync, filterTicketsByCompany, sortTickets } from './redux/slices/ticketSlice';
 // import './App.css';
 import styles from './App.module.scss';
 
@@ -18,7 +18,7 @@ function App() {
     const dataFilter = useSelector((state: RootState) => state.dataTickets.filteredTickets );
 
     useEffect(() => {
-        dispatch(fetchUsersAsync());
+        dispatch(fetchTicketsAsync());
     }, [dispatch]);
 
     useEffect(() => {
@@ -32,9 +32,9 @@ function App() {
               <li key={item.id}>{item.company} {item.price} {item.id}</li>
               ))}
           </ul>
-          <button onClick={() => dispatch(fetchUsersAsync())}>more</button>
+          <button onClick={() => dispatch(fetchTicketsAsync())}>more</button>
 
-          <button onClick={() => dispatch(sortTickets())}>Самый дешевый</button>
+          <button onClick={() => dispatch(sortTickets('price'))}>Самый дешевый</button>
           <button >Самый быстрый</button>
           <button >Самый оптимальный</button>
 
@@ -62,7 +62,7 @@ function App() {
 
           <Layout
               HeaderComponent={<Header />}
-              MainComponent={<Main ticketData={data}/>}
+              MainComponent={<Main ticketsData={data}/>}
               FooterComponent={<Footer />}
           />
       </div>

@@ -1,0 +1,52 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+.label {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 19px;
+    cursor: pointer;
+
+    .checkbox {
+        display: none;
+    }
+
+    .checkboxFakeWhite {
+        border: 1px solid $base-white;
+        color: $base-white;
+    }
+
+    .checkboxFakePurple {
+        border: 1px solid $base-purple;
+        color: $base-purple;
+    }
+
+    .checkboxFake {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 21px;
+        height: 21px;
+        border-radius: 4px;
+    }
+
+    .checkboxFake::before {
+        content: "\2714";
+        line-height: 15px;
+        opacity: 0;
+        transition: 0.2s ease;
+    }
+
+    .checkbox:checked + .checkboxFake::before {
+        opacity: 1;
+    }
+
+    .textWhite {
+        color: $base-white;
+    }
+
+    .textPurple {
+        color: $base-label;
+    }
+}

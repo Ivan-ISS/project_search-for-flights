@@ -11,7 +11,7 @@ import { ITicket } from './types/ticketsType';
 
 let idCounter = 0;
 
-const companyNames = [ 'Победа', 'Red Wings', 'S7 Airlines' ];
+const companyNames = [ 'Pobeda', 'Red Wings', 'S7 Airlines' ];
 const minPrice: number = 2000;
 const maxPrice: number = 80000;
 
@@ -49,7 +49,7 @@ export const fakeData = (numberOfTickets: number) => {
 export const fetchUsers = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(fakeData(6).tickets);
+            resolve(fakeData(3).tickets);
         }, 1000);
     });
 };

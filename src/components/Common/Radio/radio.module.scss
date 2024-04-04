@@ -1,0 +1,61 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+.wrapRadio {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 19px;
+    cursor: pointer;
+
+    .radioWhite {
+        border: 1px solid $base-white;
+
+        &:checked::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 15px;
+            height: 15px;
+            background: $base-white;
+            border-radius: 50%;
+        }
+    }
+
+    .radioPurple {
+        border: 1px solid $base-purple;
+
+        &:checked::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 15px;
+            height: 15px;
+            background: $base-purple;
+            border-radius: 50%;
+        }
+    }
+
+    .radio {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .textWhite {
+        color: $base-white;
+    }
+
+    .textPurple {
+        color: $base-label;
+    }
+}

@@ -18,6 +18,7 @@
 .purple {
     background: $base-purple;
     color: $base-white;
+    transition: 0.2s ease;
 
     &:hover {
         background: $base-gray;
@@ -28,6 +29,7 @@
 .gray {
     background: $base-gray;
     color: $base-purple;
+    transition: 0.2s ease;
 
     &:hover {
         background: $base-purple;
