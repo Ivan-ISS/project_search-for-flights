@@ -10,7 +10,9 @@ const Ticket = ({ ticketData }: TicketProps): JSX.Element => {
         <div className={styles.ticket}>
             <div className={styles.price}>
                 <span className={styles.price}>{ticketData.price}</span>
-                <img className={styles.logo} src={`src/images/png/${ticketData.company.toLocaleLowerCase()}.png`} alt={ticketData.company} />
+                <div className={styles.logo}>
+                    <img src={`src/images/png/${ticketData.company.toLocaleLowerCase()}.png`} alt={ticketData.company} />
+                </div>
             </div>
             <div className={styles.info}>
                 <div className={styles.insert}>

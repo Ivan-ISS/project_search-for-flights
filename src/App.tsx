@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 // import viteLogo from '/vite.svg';
 import { useDispatch, useSelector/* , TypedUseSelectorHook */ } from 'react-redux';
 import { RootState, RootDispatch } from './redux/store';
-import { fetchTicketsAsync, filterTicketsByCompany, sortTickets } from './redux/slices/ticketSlice';
+import { fetchTicketsAsync, filterTicketsByCompany } from './redux/slices/ticketSlice';
 // import './App.css';
 import styles from './App.module.scss';
 
@@ -15,15 +15,16 @@ function App() {
     const dispatch = useDispatch<RootDispatch>();
     //const data: TypedUseSelectorHook<RootState> = useSelector((state: TypedUseSelectorHook<RootState>) => state );
     const data = useSelector((state: RootState) => state.dataTickets.tickets );
+    const dataDuplicate = useSelector((state: RootState) => state.dataTickets.ticketsDuplicate );
     const dataFilter = useSelector((state: RootState) => state.dataTickets.filteredTickets );
 
     useEffect(() => {
         dispatch(fetchTicketsAsync());
     }, [dispatch]);
 
-    useEffect(() => {
+    /* useEffect(() => {
       dispatch(filterTicketsByCompany('S7 Airlines'));
-    }, [data]);
+    }, [data]); */
 
   return (
       <div className={styles.app}>
@@ -34,7 +35,7 @@ function App() {
           </ul>
           <button onClick={() => dispatch(fetchTicketsAsync())}>more</button>
 
-          <button onClick={() => dispatch(sortTickets('price'))}>Самый дешевый</button>
+          {/* <button onClick={() => dispatch(sortTickets('price'))}>Самый дешевый</button> */}
           <button >Самый быстрый</button>
           <button >Самый оптимальный</button>
 

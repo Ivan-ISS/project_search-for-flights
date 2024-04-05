@@ -12,8 +12,8 @@ const TicketGroup = ({ ticketsData }: TicketGroupProps): JSX.Element => {
     return (
         <ul className={styles.listTicket}>
             {ticketsData.map((ticketData, index) => (
-                <li>
-                    <Ticket key={index} ticketData={ticketData} />
+                <li key={index}>
+                    <Ticket ticketData={ticketData} />
                 </li>
             ))}
         </ul>

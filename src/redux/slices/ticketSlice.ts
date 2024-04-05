@@ -1,6 +1,13 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { ITicket } from '../../types/ticketsType';
 import { fetchUsers } from '../../data';
+
+
+// Объект с функциями сортировки
+export const sortingFunctions: { [key: string]: (a: ITicket, b: ITicket) => number } = {
+    'Самый дешевый': (a, b) => a.price - b.price,
+    'Самый оптимальный': (a, b) => a.connectionAmount - b.connectionAmount
+};
 
 export const fetchTicketsAsync = createAsyncThunk(
     'users/fetchUsers',
@@ -16,20 +23,24 @@ const dataSlice = createSlice({
     initialState: {
         tickets: [] as ITicket[],
         filteredTickets: [] as ITicket[],
+        ticketsDuplicate: [] as ITicket[],
+        filteredCompanies: [] as string[],
+        sorting: '',
         status: 'idle',
         error: '',
     },
     reducers: {
-        sortTicketsPrice(state) {
-                state.tickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
+        sortSwitch(state, action: PayloadAction<string>) {
+            state.sorting = action.payload;
+            if (sortingFunctions[state.sorting]) {
+                state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);
+            }
         },
-        sortTickets(state, action) {
-            if (action.payload === 'Самый дешевый') {
-                state.tickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
-            }
-            if (action.payload === 'Самый оптимальный') {
-                state.tickets = state.tickets.slice().sort((a, b) => a.connectionAmount - b.connectionAmount) as ITicket[];
-            }
+        sortTicketsPrice(state) {
+            state.tickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
+        },
+        sortTicketsTransfer(state) {
+            state.tickets = state.tickets.slice().sort((a, b) => a.connectionAmount - b.connectionAmount) as ITicket[];
         },
         filterTicketsByCompany(state, action) {
             state.filteredTickets = state.tickets.filter(ticket => ticket.company === action.payload);
@@ -43,6 +54,12 @@ const dataSlice = createSlice({
             .addCase(fetchTicketsAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.tickets = [...state.tickets, ...action.payload as ITicket[]];
+
+                if (state.sorting !== '') {
+                    if (sortingFunctions[state.sorting]) {
+                        state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);
+                    }
+                }
             })
             .addCase(fetchTicketsAsync.rejected, (state, action) => {
                 state.status = 'failed';
@@ -51,6 +68,6 @@ const dataSlice = createSlice({
     },
 });
 
-export const { sortTickets, filterTicketsByCompany } = dataSlice.actions;
+export const { sortTicketsPrice, sortTicketsTransfer, filterTicketsByCompany, sortSwitch } = dataSlice.actions;
 
 export default dataSlice.reducer;

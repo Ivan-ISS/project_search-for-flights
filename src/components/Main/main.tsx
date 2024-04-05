@@ -1,7 +1,7 @@
 // import React from 'react';
 import { useDispatch } from 'react-redux';
 import { RootDispatch } from '../../redux/store';
-import { fetchTicketsAsync, sortTickets } from '../../redux/slices/ticketSlice';
+import { fetchTicketsAsync } from '../../redux/slices/ticketSlice';
 import styles from './main.module.scss';
 import { numberOfTransfer } from '../../elementsData';
 import { sortSelectors } from '../../elementsData';
@@ -35,7 +35,7 @@ const Main = ({ ticketsData }: MainProps) => {
                     </Block>
                 </aside>
                 <section className={styles.ticketsArea}>
-                    <ButtonGroup options={sortSelectors} properties={{ size: 'large', color: 'gray', setSort: (sort) => dispatch(sortTickets(sort)) }}/>
+                    <ButtonGroup options={sortSelectors} properties={{ size: 'large', color: 'gray', /* setSort: (sort) => dispatch(sortTickets(sort)) */ }}/>
                     <TicketGroup ticketsData={ticketsData} />
                     <Button size={'large'} color={'purple'} border={'rounded'} children={'Загрузить еще билеты'} onClick={() => dispatch(fetchTicketsAsync())}/>
                 </section>
