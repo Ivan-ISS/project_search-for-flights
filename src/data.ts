@@ -3,23 +3,14 @@ import { ITicket } from './types/ticketsType';
 import convertToTime from './utils/convertToTime';
 import { companyNames, numberOfTransfer } from './elementsData';
 
-// const airportNames = [
-//     { name: 'SVO'},
-//     { name: 'LED'},
-
-// ];
-
-// const tickets: ITicket[] = [];
-
 let idCounter = 0;
 
-//const companyNames = [ 'Победа', 'Red Wings', 'S7 Airlines' ];
 const minPrice: number = 2000;
 const maxPrice: number = 80000;
 
 const ticketGeneration = (): ITicket => {
     const startTime = getRandom(0, 1440);
-    let endTime = startTime + getRandom(0, 720);
+    let endTime = startTime + getRandom(100, 720);
     const duration = endTime - startTime;
 
     if (endTime > 1440) endTime = endTime - 1440;

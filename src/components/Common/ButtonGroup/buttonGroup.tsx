@@ -15,18 +15,16 @@ const ButtonGroup = ({ options, properties }: ButtonGroupProps): JSX.Element => 
 
     return (
         <div className={styles.buttonGroup}>
-            {options.map((option, index) => {
-                return (
-                    <Button
-                        key={index}
-                        children={option}
-                        size={properties.size}
-                        color={properties.color}
-                        isActive={sortName === option}
-                        onClick={() => dispatch(sortSwitch(option))}
-                    />
-                );
-            })}
+            {options.map((option, index) =>
+                <Button
+                    key={index}
+                    children={option}
+                    size={properties.size}
+                    color={properties.color}
+                    isActive={sortName === option}
+                    onClick={() => dispatch(sortSwitch(option))}
+                />
+            )}
         </div>
     );
 };
