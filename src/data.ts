@@ -1,6 +1,7 @@
 import getRandom from './utils/getRandomNumber';
 import { ITicket } from './types/ticketsType';
 import convertToTime from './utils/convertToTime';
+import { companyNames, numberOfTransfer } from './elementsData';
 
 // const airportNames = [
 //     { name: 'SVO'},
@@ -12,7 +13,7 @@ import convertToTime from './utils/convertToTime';
 
 let idCounter = 0;
 
-const companyNames = [ 'Pobeda', 'Red Wings', 'S7 Airlines' ];
+//const companyNames = [ 'Победа', 'Red Wings', 'S7 Airlines' ];
 const minPrice: number = 2000;
 const maxPrice: number = 80000;
 
@@ -37,7 +38,7 @@ const ticketGeneration = (): ITicket => {
             currency: 'RUB',
             time: { startTime: `${startHours}:${startMinutes}`,  endTime: `${endHours}:${endMinutes}` },
             duration: duration,
-            connectionAmount: getRandom(0, 3),
+            connectionAmount: getRandom(0, numberOfTransfer.length - 1),
         }
     );
 };

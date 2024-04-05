@@ -22,10 +22,9 @@ export const fetchTicketsAsync = createAsyncThunk(
 const dataSlice = createSlice({
     name: 'tickets',
     initialState: {
-        tickets: [] as ITicket[],
-        filteredTickets: [] as ITicket[],
-        ticketsDuplicate: [] as ITicket[],
-        filteredCompanies: [] as string[],
+        tickets: [] as ITicket[],           // Массив с билетами, который будем изменять (после фильтров)
+        allTickets : [] as ITicket[],       // Массив со всеми билетами (на основе которого будем фильтровать) - неизменямый массив
+        filteredCompanies: [] as string[],  // Переменная, содержащая названия компаний, по которым ставится фильтр
         sorting: '',
         status: 'idle',
         error: '',
@@ -37,16 +36,26 @@ const dataSlice = createSlice({
                 state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);
             }
         },
-        sortTicketsPrice(state) {
-            state.tickets = state.tickets.slice().sort((a, b) => a.price - b.price) as ITicket[];
-        },
-        sortTicketsTransfer(state) {
-            state.tickets = state.tickets.slice().sort((a, b) => a.connectionAmount - b.connectionAmount) as ITicket[];
-        },
         filterTicketsByCompany(state, action) {
-            state.filteredTickets = state.tickets.filter(ticket => ticket.company === action.payload);
+            const company = action.payload;
+
+            if (!state.filteredCompanies.includes(company)) {                                       // После нажатия кнопки фильтра:
+                state.filteredCompanies.push(company);                                              // Добавляем фильтр в переменную если его там еще нет
+            } else {
+                state.filteredCompanies = state.filteredCompanies.filter((c) => c !== company);     // Удаляем фильтр из переменной если он там был
+            }
+
+            state.tickets = [];
+            state.filteredCompanies.forEach(element => {                                            // Ставим фильтр по всем компаниям в переменной
+                state.tickets = [ ...state.tickets, ...state.allTickets.filter(ticket => ticket.company === element)];
+            });
+
+            if (!state.filteredCompanies.length) state.tickets = state.allTickets;                  // Если все фильтры отключены, то показываем все билеты
+
+            if (state.sorting !== '' && sortingFunctions[state.sorting])                            // Проверка: содержит ли переменная с сортировкой какое-либо значение
+                state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);        // Если содержит, то выполняем сортировку
         },
-      },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchTicketsAsync.pending, (state) => {
@@ -54,13 +63,17 @@ const dataSlice = createSlice({
             })
             .addCase(fetchTicketsAsync.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.tickets = [...state.tickets, ...action.payload as ITicket[]];
+                state.tickets = [...state.tickets, ...action.payload as ITicket[]];                 // Создаем массив с билетами, который будем изменять (после фильтров)
+                state.allTickets = [...state.allTickets, ...action.payload as ITicket[]];           // Создаем массив со всеми билетами (на основе которого будем фильтровать)
 
-                if (state.sorting !== '') {
-                    if (sortingFunctions[state.sorting]) {
-                        state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);
-                    }
+                if (state.filteredCompanies.length) {                                               // Проверка: содержит ли переменная с фильтрами какое-либо значение  
+                    state.tickets = state.allTickets.filter((ticket) => {                           // Если содержит, то фильтруем билеты (после загрузки доп-х билетов)
+                        return state.filteredCompanies.length === 0 || state.filteredCompanies.includes(ticket.company);
+                    });
                 }
+
+                if (state.sorting !== '' && sortingFunctions[state.sorting])                        // Проверка: содержит ли переменная с сортировкой какое-либо значение
+                    state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);    // Если содержит, то выполняем сортировку (после загрузки доп-х билетов)
             })
             .addCase(fetchTicketsAsync.rejected, (state, action) => {
                 state.status = 'failed';
@@ -69,6 +82,6 @@ const dataSlice = createSlice({
     },
 });
 
-export const { sortTicketsPrice, sortTicketsTransfer, filterTicketsByCompany, sortSwitch } = dataSlice.actions;
+export const { sortSwitch, filterTicketsByCompany } = dataSlice.actions;
 
 export default dataSlice.reducer;

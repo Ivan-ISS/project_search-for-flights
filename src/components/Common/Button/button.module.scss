@@ -18,9 +18,15 @@
 .purple {
     background: $base-purple;
     color: $base-white;
-    transition: 0.2s ease;
+    transition: 0.3s ease;
 
     &:hover {
+        background: $base-gray;
+        color: $base-purple;
+        font-size: 17px;
+    }
+
+    &.active {
         background: $base-gray;
         color: $base-purple;
     }
@@ -29,9 +35,15 @@
 .gray {
     background: $base-gray;
     color: $base-purple;
-    transition: 0.2s ease;
+    transition: 0.3s ease;
 
     &:hover {
+        background: $base-purple;
+        color: $base-white;
+        font-size: 17px;
+    }
+
+    &.active {
         background: $base-purple;
         color: $base-white;
     }

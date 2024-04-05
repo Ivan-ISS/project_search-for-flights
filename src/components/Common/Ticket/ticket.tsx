@@ -11,12 +11,10 @@ const Ticket = ({ ticketData }: TicketProps): JSX.Element => {
         <div className={styles.ticket}>
             <div className={styles.price}>
                 <span className={styles.price}>
-                    {
-                        `
-                            ${ticketData.price.toString().substring(0, ticketData.price.toString().length - 3)} 
-                            ${ticketData.price.toString().substring(ticketData.price.toString().length - 3)} Р
-                        ` 
-                    }
+                    {`
+                        ${ticketData.price.toString().substring(0, ticketData.price.toString().length - 3)} 
+                        ${ticketData.price.toString().substring(ticketData.price.toString().length - 3)} Р
+                    `}
                 </span>
                 <div className={styles.logo}>
                     <img src={`src/images/png/${ticketData.company.toLocaleLowerCase()}.png`} alt={ticketData.company} />
@@ -29,7 +27,12 @@ const Ticket = ({ ticketData }: TicketProps): JSX.Element => {
                 </div>
                 <div className={styles.insert}>
                     <span className={styles.signature}>В пути</span>
-                    <span className={styles.meaning}>{`${convertToTime(ticketData.duration).hours} ч ${convertToTime(ticketData.duration).minutes} мин`}</span>
+                    <span className={styles.meaning}>
+                        {`
+                            ${convertToTime(ticketData.duration).hours} ч 
+                            ${convertToTime(ticketData.duration).minutes} мин
+                        `}
+                    </span>
                 </div>
                 <div className={styles.insert}>
                     <span className={styles.signature}>Пересадки</span>

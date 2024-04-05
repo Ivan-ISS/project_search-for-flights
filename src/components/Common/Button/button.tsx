@@ -8,10 +8,11 @@ export type Color = 'purple' | 'gray';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
     size: Size,
     color: Color,
+    isActive?: boolean,
     border?: 'rounded',
 }
 
-const Button = ({ size = 'large', color = 'gray', border, children, ...props }: ButtonProps): JSX.Element => {
+const Button = ({ size = 'large', color = 'gray', isActive, border, children, ...props }: ButtonProps): JSX.Element => {
 
     const onClickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (props.onClick) {
@@ -21,7 +22,7 @@ const Button = ({ size = 'large', color = 'gray', border, children, ...props }: 
     };
 
     return (
-        <button {...props} onClick={onClickButton} className={`${styles.button} ${styles[color]} ${styles[size]} ${border ? styles[border]: null}`}>
+        <button {...props} onClick={onClickButton} className={`${styles.button} ${styles[color]} ${styles[size]} ${border ? styles[border]: null} ${isActive ? styles.active : null}`}>
             {children}
         </button>
     );

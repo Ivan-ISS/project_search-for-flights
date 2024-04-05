@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { RootDispatch } from '../../../redux/store';
-import { /* sortTicketsPrice, sortTicketsTransfer, */ /* filterTicketsByCompany, */ sortSwitch } from '../../../redux/slices/ticketSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootDispatch, RootState } from '../../../redux/store';
+import { sortSwitch } from '../../../redux/slices/ticketSlice';
 import styles from './buttonGroup.module.scss';
 import Button, { ButtonProps } from '../Button/button';
 
@@ -11,28 +11,19 @@ export interface ButtonGroupProps {
 
 const ButtonGroup = ({ options, properties }: ButtonGroupProps): JSX.Element => {
     const dispatch = useDispatch<RootDispatch>();
-
-    let sort: () => void;
-
-    /* options.forEach(element => {
-        if (element === 'Самый дешевый') { sort = () => dispatch(sortTicketsPrice()); }
-        if (element === 'Самый оптимальный') { sort = () => dispatch(sortTicketsTransfer()); }
-    }); */
-
+    const sortName = useSelector((state: RootState) => state.dataTickets.sorting);
 
     return (
         <div className={styles.buttonGroup}>
             {options.map((option, index) => {
-                sort = () => dispatch(sortSwitch(option));
-                /* if (option === 'Самый быстрый') { sort = () => dispatch(filterTicketsByCompany('S7 Airlines')); } */
-                /* if (option === 'Самый оптимальный') { sort = () => dispatch(sortSwitch('Самый оптимальный')); } */
                 return (
                     <Button
                         key={index}
                         children={option}
                         size={properties.size}
                         color={properties.color}
-                        onClick={sort}
+                        isActive={sortName === option}
+                        onClick={() => dispatch(sortSwitch(option))}
                     />
                 );
             })}
