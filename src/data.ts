@@ -20,20 +20,12 @@ const ticketGeneration = (): ITicket => {
     const startTime = getRandom(0, 1440);
     let endTime = startTime + getRandom(0, 720);
     const duration = endTime - startTime;
-    
-    if (endTime > 1440) endTime = endTime - 1440;
 
-    console.log(startTime);
-    console.log(endTime);
+    if (endTime > 1440) endTime = endTime - 1440;
 
     const { hours: startHours, minutes: startMinutes } = convertToTime(startTime);
     const { hours: endHours, minutes: endMinutes } = convertToTime(endTime);
-
-    /* const startHours = Math.floor(startTime / 60);
-    const startMinutes = (Math.floor(((startTime / 60) % 1) * Math.pow(10, 5))) * 60;
-
-    const endHours = Math.floor(startTime / 60);
-    const endMinutes = (Math.floor(((startTime / 60) % 1) * Math.pow(10, 5))) * 60; */
+    
 
     return (
         {
@@ -44,7 +36,7 @@ const ticketGeneration = (): ITicket => {
             price: getRandom(minPrice, maxPrice),
             currency: 'RUB',
             time: { startTime: `${startHours}:${startMinutes}`,  endTime: `${endHours}:${endMinutes}` },
-            duration: 2,
+            duration: duration,
             connectionAmount: getRandom(0, 3),
         }
     );

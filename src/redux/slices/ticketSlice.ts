@@ -6,6 +6,7 @@ import { fetchUsers } from '../../data';
 // Объект с функциями сортировки
 export const sortingFunctions: { [key: string]: (a: ITicket, b: ITicket) => number } = {
     'Самый дешевый': (a, b) => a.price - b.price,
+    'Самый быстрый': (a, b) => a.duration - b.duration,
     'Самый оптимальный': (a, b) => a.connectionAmount - b.connectionAmount
 };
 

@@ -36,6 +36,14 @@
             flex-direction: column;
             align-items: start;
             row-gap: 9px;
+
+            .signature {
+                color: $base-label;
+            }
+
+            .meaning {
+                color: $base-purple;
+            }
         }
     }
 }
