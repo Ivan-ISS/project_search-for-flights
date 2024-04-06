@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { ITicket } from '../../types/ticketsType';
-import { fetchUsers } from '../../data';
+import { fetchTickets } from '../../data';
 
 
 // Объект с функциями сортировки
@@ -13,7 +13,7 @@ export const sortingFunctions: { [key: string]: (a: ITicket, b: ITicket) => numb
 export const fetchTicketsAsync = createAsyncThunk(
     'users/fetchUsers',
     async () => {
-        const response = await fetchUsers();
+        const response = await fetchTickets();
         console.log(response);
         return response;
     }
@@ -25,6 +25,8 @@ const dataSlice = createSlice({
         tickets: [] as ITicket[],           // Массив с билетами, который будем изменять (после фильтров)
         allTickets : [] as ITicket[],       // Массив со всеми билетами (на основе которого будем фильтровать) - неизменямый массив
         filteredCompanies: [] as string[],  // Переменная, содержащая названия компаний, по которым ставится фильтр
+        filteredTransfers: [] as number[],
+        transfersName: [] as string[],
         sorting: '',
         status: 'idle',
         error: '',
@@ -45,15 +47,56 @@ const dataSlice = createSlice({
                 state.filteredCompanies = state.filteredCompanies.filter((c) => c !== company);     // Удаляем фильтр из переменной если он там был
             }
 
-            state.tickets = [];
-            state.filteredCompanies.forEach(element => {                                            // Ставим фильтр по всем компаниям в переменной
+            // state.tickets = [];
+            /* state.filteredCompanies.forEach(element => {
                 state.tickets = [ ...state.tickets, ...state.allTickets.filter(ticket => ticket.company === element)];
-            });
+            }); */
 
-            if (!state.filteredCompanies.length) state.tickets = state.allTickets;                  // Если все фильтры отключены, то показываем все билеты
+            if (state.filteredCompanies.length || state.filteredTransfers.length) {                 // Ставим все фильтры, которые есть
+                state.tickets = state.allTickets.filter((ticket) => {
+                    return (
+                        state.filteredCompanies.length === 0 || state.filteredCompanies.includes(ticket.company)
+                    ) && (
+                        state.filteredTransfers.length === 0 || state.filteredTransfers.includes(ticket.connectionAmount)
+                    );
+                });
+            }
+
+            if (!state.filteredCompanies.length && !state.filteredTransfers.length) state.tickets = state.allTickets;  // Если все фильтры отключены, то показываем все билеты
 
             if (state.sorting !== '' && sortingFunctions[state.sorting])                            // Проверка: содержит ли переменная с сортировкой какое-либо значение
                 state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);        // Если содержит, то выполняем сортировку
+        },
+        filterTicketsByTransfers(state, action) {
+            const transfersName = action.payload;
+            let transfers = parseFloat(action.payload.substring(0, 1));
+            if (isNaN(transfers)) transfers = 0;
+
+
+            if (!state.filteredTransfers.includes(transfers)) {
+                state.filteredTransfers.push(transfers);
+                state.transfersName.push(transfersName);
+            } else {
+                state.filteredTransfers = state.filteredTransfers.filter((c) => c !== transfers);
+                state.transfersName = state.transfersName.filter((c) => c !== transfersName);
+            }
+
+            // state.tickets = [];
+
+            if (state.filteredCompanies.length || state.filteredTransfers.length) {
+                state.tickets = state.allTickets.filter((ticket) => {
+                    return (
+                        state.filteredCompanies.length === 0 || state.filteredCompanies.includes(ticket.company)
+                    ) && (
+                        state.filteredTransfers.length === 0 || state.filteredTransfers.includes(ticket.connectionAmount)
+                    );
+                });
+            }
+
+            if (!state.filteredTransfers.length && !state.filteredCompanies.length) state.tickets = state.allTickets;
+
+            if (state.sorting !== '' && sortingFunctions[state.sorting])
+                state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);
         },
     },
     extraReducers: (builder) => {
@@ -66,9 +109,13 @@ const dataSlice = createSlice({
                 state.tickets = [...state.tickets, ...action.payload as ITicket[]];                 // Создаем массив с билетами, который будем изменять (после фильтров)
                 state.allTickets = [...state.allTickets, ...action.payload as ITicket[]];           // Создаем массив со всеми билетами (на основе которого будем фильтровать)
 
-                if (state.filteredCompanies.length) {                                               // Проверка: содержит ли переменная с фильтрами какое-либо значение  
+                if (state.filteredCompanies.length || state.filteredTransfers.length) {             // Проверка: содержит ли переменная с фильтрами какое-либо значение
                     state.tickets = state.allTickets.filter((ticket) => {                           // Если содержит, то фильтруем билеты (после загрузки доп-х билетов)
-                        return state.filteredCompanies.length === 0 || state.filteredCompanies.includes(ticket.company);
+                        return (
+                            state.filteredCompanies.length === 0 || state.filteredCompanies.includes(ticket.company)
+                        ) && (
+                            state.filteredTransfers.length === 0 || state.filteredTransfers.includes(ticket.connectionAmount)
+                        );
                     });
                 }
 
@@ -82,6 +129,6 @@ const dataSlice = createSlice({
     },
 });
 
-export const { sortSwitch, filterTicketsByCompany } = dataSlice.actions;
+export const { sortSwitch, filterTicketsByCompany, filterTicketsByTransfers } = dataSlice.actions;
 
 export default dataSlice.reducer;

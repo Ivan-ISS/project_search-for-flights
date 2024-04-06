@@ -18,7 +18,6 @@ const ticketGeneration = (): ITicket => {
     const { hours: startHours, minutes: startMinutes } = convertToTime(startTime);
     const { hours: endHours, minutes: endMinutes } = convertToTime(endTime);
     
-
     return (
         {
             id: idCounter,
@@ -34,22 +33,16 @@ const ticketGeneration = (): ITicket => {
     );
 };
 
-const getTickets = (numberOfTickets: number) => {
+const fakeData = (numberOfTickets: number) => {
     const newTickets: ITicket[] = [];
     for (let i = 0; i < numberOfTickets; i++) {
         idCounter++;
         newTickets.push(ticketGeneration());
     }
-    return newTickets;
+    return { tickets: newTickets };
 };
 
-export const fakeData = (numberOfTickets: number) => {
-    return {
-        tickets: getTickets(numberOfTickets)
-    };
-};
-
-export const fetchUsers = () => {
+export const fetchTickets = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(fakeData(3).tickets);

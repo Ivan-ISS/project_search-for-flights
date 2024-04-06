@@ -28,7 +28,7 @@ const Main = ({ ticketsData }: MainProps) => {
             <div className={styles.container}>
                 <aside className={styles.aside}>
                     <Block title={'Количество пересадок'} >
-                        <CheckboxGroup options={numberOfTransfer} properties={{ checked: false, color: 'purple', onChange: (v) => !v }}/>
+                        <CheckboxGroup options={numberOfTransfer} properties={{ checked: false, color: 'purple' }}/>
                     </Block >
                     <Block title={'Компании'}>
                         <RadioGroup options={companyNames} properties={{ /* name: 'company', */ color: 'purple' }}/>
