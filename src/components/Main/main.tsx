@@ -1,6 +1,6 @@
 // import React from 'react';
-import { useDispatch } from 'react-redux';
-import { RootDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootDispatch, RootState } from '../../redux/store';
 import { fetchTicketsAsync } from '../../redux/slices/ticketSlice';
 import styles from './main.module.scss';
 import { numberOfTransfer } from '../../elementsData';
@@ -13,6 +13,7 @@ import RadioGroup from '../Common/RadioGroup/radioGroup';
 import CheckboxGroup from '../Common/CheckboxGroup/checkboxGroup';
 import TicketGroup from '../Common/TicketGroup/ticketGroup';
 import DropdownMenu from '../DropdownMenu/dropdownMenu';
+import Loader from '../Common/Loader/loader';
 import { ITicket } from '../../types/ticketsType';
 
 export interface MainProps {
@@ -21,7 +22,11 @@ export interface MainProps {
 
 const Main = ({ ticketsData }: MainProps) => {
     const dispatch = useDispatch<RootDispatch>();
+    const loading = useSelector((state: RootState) => state.dataTickets.status);
 
+    /* if (loading === 'in progress') return <Loader />;
+
+    if (loading === 'successfully') */
     return (
         <main className={styles.main}>
             <div className={styles.container}>
@@ -46,6 +51,11 @@ const Main = ({ ticketsData }: MainProps) => {
                         </DropdownMenu>
                     </div>
                     <TicketGroup ticketsData={ticketsData} />
+                        {
+                            loading === 'in progress'
+                            ? <Loader />
+                            : null
+                        }
                     <Button size={'large'} color={'purple'} border={'rounded'} children={'Загрузить еще билеты'} onClick={() => dispatch(fetchTicketsAsync())}/>
                 </section>
             </div>

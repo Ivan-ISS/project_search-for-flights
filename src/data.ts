@@ -46,6 +46,6 @@ export const fetchTickets = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(fakeData(3).tickets);
-        }, 1000);
+        }, 2000);
     });
 };

@@ -28,7 +28,7 @@ const dataSlice = createSlice({
         filteredTransfers: [] as number[],
         transfersName: [] as string[],
         sorting: '',
-        status: 'idle',
+        status: '',
         error: '',
     },
     reducers: {
@@ -92,10 +92,10 @@ const dataSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchTicketsAsync.pending, (state) => {
-                state.status = 'loading';
+                state.status = 'in progress';
             })
             .addCase(fetchTicketsAsync.fulfilled, (state, action) => {
-                state.status = 'succeeded';
+                state.status = 'successfully';
                 state.tickets = [...state.tickets, ...action.payload as ITicket[]];                 // Создаем массив с билетами, который будем изменять (после фильтров)
                 state.allTickets = [...state.allTickets, ...action.payload as ITicket[]];           // Создаем массив со всеми билетами (на основе которого будем фильтровать)
 
@@ -113,7 +113,7 @@ const dataSlice = createSlice({
                     state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);    // Если содержит, то выполняем сортировку (после загрузки доп-х билетов)
             })
             .addCase(fetchTicketsAsync.rejected, (state, action) => {
-                state.status = 'failed';
+                state.status = 'download failed';
                 state.error = action.error.message ? action.error.message : '';
             });
     },

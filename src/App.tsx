@@ -20,20 +20,6 @@ function App() {
 
   return (
       <div className={styles.app}>
-          <ul>
-              {data.map(item => (
-              <li key={item.id}>{item.company} {item.price} {item.id}</li>
-              ))}
-          </ul>
-          <button onClick={() => dispatch(fetchTicketsAsync())}>more</button>
-
-          <p>
-              <label><input type="radio" />all</label>
-              <label><input type="radio" />Victory</label>
-              <label><input type="radio" />RW</label>
-              <label onClick={() => dispatch(filterTicketsByCompany('S7 Airlines'))}><input type="radio" />s7</label>
-          </p>
-
           <Layout
               HeaderComponent={<Header />}
               MainComponent={<Main ticketsData={data}/>}
