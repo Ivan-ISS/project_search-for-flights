@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { ITicket } from '../../types/ticketsType';
 import { fetchTickets } from '../../data';
-
+import transfersNameToNumber from '../../utils/transfersNameToNumber';
 
 // Объект с функциями сортировки
 export const sortingFunctions: { [key: string]: (a: ITicket, b: ITicket) => number } = {
@@ -47,11 +47,6 @@ const dataSlice = createSlice({
                 state.filteredCompanies = state.filteredCompanies.filter((c) => c !== company);     // Удаляем фильтр из переменной если он там был
             }
 
-            // state.tickets = [];
-            /* state.filteredCompanies.forEach(element => {
-                state.tickets = [ ...state.tickets, ...state.allTickets.filter(ticket => ticket.company === element)];
-            }); */
-
             if (state.filteredCompanies.length || state.filteredTransfers.length) {                 // Ставим все фильтры, которые есть
                 state.tickets = state.allTickets.filter((ticket) => {
                     return (
@@ -69,19 +64,14 @@ const dataSlice = createSlice({
         },
         filterTicketsByTransfers(state, action) {
             const transfersName = action.payload;
-            let transfers = parseFloat(action.payload.substring(0, 1));
-            if (isNaN(transfers)) transfers = 0;
 
-
-            if (!state.filteredTransfers.includes(transfers)) {
-                state.filteredTransfers.push(transfers);
+            if (!state.filteredTransfers.includes(transfersNameToNumber(transfersName))) {
+                state.filteredTransfers.push(transfersNameToNumber(transfersName));
                 state.transfersName.push(transfersName);
             } else {
-                state.filteredTransfers = state.filteredTransfers.filter((c) => c !== transfers);
+                state.filteredTransfers = state.filteredTransfers.filter((c) => c !== transfersNameToNumber(transfersName));
                 state.transfersName = state.transfersName.filter((c) => c !== transfersName);
             }
-
-            // state.tickets = [];
 
             if (state.filteredCompanies.length || state.filteredTransfers.length) {
                 state.tickets = state.allTickets.filter((ticket) => {

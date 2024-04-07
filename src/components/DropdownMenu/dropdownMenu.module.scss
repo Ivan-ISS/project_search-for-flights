@@ -1,0 +1,45 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+.dropdownMenu {
+    border-radius: 10px;
+
+    .menuPanel {
+        padding: 12.5px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .btnOpen {
+            cursor: pointer;
+            background: transparent;
+            font-family: inherit;
+            font-weight: inherit;
+            color: inherit;
+            font-size: $font-size-mobile;
+    
+            display: flex;
+            align-items: center;
+            column-gap: 17px;
+
+            .arrow {
+                rotate: 180deg;
+            }
+        }
+    }
+
+    .menuSettings {
+        display: flex;
+        column-gap: 29px;
+    }
+}
+
+.purple {
+    background: $base-purple;
+    color: $base-white;
+}
+
+.white {
+    background: $base-gray;
+    color: $base-purple;
+}

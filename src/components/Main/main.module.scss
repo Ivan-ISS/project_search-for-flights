@@ -4,9 +4,10 @@
     flex: 1;
 
     .container {
-        max-width: 1050px;
+        max-width: 1090px;
         width: 100%;
         margin: 0 auto;
+        padding: 0 20px 0 20px;
 
         display: flex;
         flex-direction: row;
@@ -25,6 +26,30 @@
             display: flex;
             flex-direction: column;
             row-gap: 30px;
+            
+            .menu {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .main {
+
+        .container {
+
+            .aside {
+                display: none;
+            }
+
+            .ticketsArea {
+
+                .menu {
+                    display: block;
+                }
+            }
         }
     }
 }
