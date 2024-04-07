@@ -31,6 +31,7 @@
     .menuSettings {
         display: flex;
         column-gap: 29px;
+        padding: 0 6px 0 6px;
     }
 }
 
@@ -42,4 +43,18 @@
 .white {
     background: $base-gray;
     color: $base-purple;
+}
+
+@media (max-width: 715px) {
+
+    .dropdownMenu {
+        font-size: $font-size-mobile;
+
+        .menuPanel {
+
+            .btnName {
+                display: none;
+            }
+        }
+    }
 }

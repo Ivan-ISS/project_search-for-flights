@@ -24,9 +24,6 @@ const Main = ({ ticketsData }: MainProps) => {
     const dispatch = useDispatch<RootDispatch>();
     const loading = useSelector((state: RootState) => state.dataTickets.status);
 
-    /* if (loading === 'in progress') return <Loader />;
-
-    if (loading === 'successfully') */
     return (
         <main className={styles.main}>
             <div className={styles.container}>
@@ -39,7 +36,7 @@ const Main = ({ ticketsData }: MainProps) => {
                     </Block>
                 </aside>
                 <section className={styles.ticketsArea}>
-                    <ButtonGroup options={sortSelectors} properties={{ size: 'large', color: 'gray', /* setSort: (sort) => dispatch(sortTickets(sort)) */ }}/>
+                    <ButtonGroup options={sortSelectors} properties={{ size: 'small', color: 'gray', /* setSort: (sort) => dispatch(sortTickets(sort)) */ }}/>
                     <div className={styles.menu}>
                         <DropdownMenu color={'purple'}>
                             <Block title={'Компании'} color={'purple'} padding={'paddingOff'}>
@@ -56,7 +53,7 @@ const Main = ({ ticketsData }: MainProps) => {
                             ? <Loader />
                             : null
                         }
-                    <Button size={'large'} color={'purple'} border={'rounded'} children={'Загрузить еще билеты'} onClick={() => dispatch(fetchTicketsAsync())}/>
+                    <Button size={'large'} color={'purple'} border={'rounded'} /* style={{fontSize: '24px'}} */ children={'Загрузить еще билеты'} onClick={() => dispatch(fetchTicketsAsync())}/>
                 </section>
             </div>
         </main>

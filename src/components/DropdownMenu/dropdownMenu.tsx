@@ -25,7 +25,7 @@ const DropdownMenu = ({ children, color = 'purple', ...props }: DropdownMenuProp
                     </span>
                 </div>
                 <button className={styles.btnOpen} onClick={() => setSettingsOpen(v => !v)}>
-                    Открыть настройки
+                    <span className={styles.btnName}>Открыть настройки</span>
                     <img src={arrow} className={settingsOpen ? styles.arrow : ''} alt="arrow" />
                 </button>
             </div>

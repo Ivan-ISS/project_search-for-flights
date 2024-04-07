@@ -23,7 +23,6 @@
     &:hover {
         background: $base-gray;
         color: $base-purple;
-        font-size: 17px;
     }
 
     &.active {
@@ -40,7 +39,6 @@
     &:hover {
         background: $base-purple;
         color: $base-white;
-        font-size: 17px;
     }
 
     &.active {
@@ -50,11 +48,41 @@
 }
 
 .small {
-    padding: 13px;
-    font-size: $font-size-mobile;
+    padding: 17px 2px;
+    font-size: $font-size-base;
+    transition: 0.3s ease;
+
+    &:hover {
+        font-size: 17px;
+    }
 }
 
 .large {
-    padding: 17px;
-    font-size: $font-size-base;
+    padding: 17px 2px;
+    font-size: $font-size-large;
+    transition: 0.3s ease;
+
+    &:hover {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 715px) {
+
+    .button {
+        font-size: $font-size-mobile;
+
+        &:hover {
+            font-size: 12px;
+        }
+    }
+
+    .large {
+        padding: 17px 2px;
+        font-size: $font-size-large;
+
+        &:hover {
+            font-size: 25px;
+        }
+    }
 }

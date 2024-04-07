@@ -17,7 +17,7 @@ const Ticket = ({ ticketData }: TicketProps): JSX.Element => {
                     `}
                 </span>
                 <div className={styles.logo}>
-                    <img src={`src/images/png/${ticketData.company.toLocaleLowerCase()}.png`} alt={ticketData.company} />
+                    <img className={styles.imgLogo} src={`src/images/png/${ticketData.company.toLocaleLowerCase()}.png`} alt={ticketData.company} />
                 </div>
             </div>
             <div className={styles.info}>

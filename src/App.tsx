@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector/* , TypedUseSelectorHook */ } from 'react-redux';
 import { RootState, RootDispatch } from './redux/store';
-import { fetchTicketsAsync, filterTicketsByCompany } from './redux/slices/ticketSlice';
+import { fetchTicketsAsync } from './redux/slices/ticketSlice';
 import styles from './App.module.scss';
 
 import Layout from './components/Layout/layout';

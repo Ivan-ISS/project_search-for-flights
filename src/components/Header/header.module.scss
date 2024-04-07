@@ -1,10 +1,48 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
 .header {
     width: 100%;
-    background: gray;
+    min-height: 81px;
 
     .container {
-        max-width: 1050px;
+        max-width: 1090px;
         width: 100%;
         margin: 0 auto;
+        padding: 20px 20px 0 20px;
+
+        display: flex;
+        align-items: center;
+
+        .logo {
+            margin-right: 34px;
+        }
+
+        .title {
+            font-size: $font-size-large;
+            color: $base-purple;
+            font-weight: 700;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .header {
+
+        .container {
+            justify-content: center;
+            padding: 20px 10px 0 10px;
+
+            .title {
+                display: none;
+            }
+
+            .logo {
+                .imgLogo {
+                    width: 68px;
+                }
+            }
+        }
     }
 }
