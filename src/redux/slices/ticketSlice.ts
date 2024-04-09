@@ -23,13 +23,14 @@ const dataSlice = createSlice({
     name: 'tickets',
     initialState: {
         tickets: [] as ITicket[],           // Массив с билетами, который будем изменять (после фильтров)
-        allTickets : [] as ITicket[],       // Массив со всеми билетами (на основе которого будем фильтровать) - неизменямый массив
-        filteredCompanies: [] as string[],  // Переменная, содержащая названия компаний, по которым ставится фильтр
-        filteredTransfers: [] as number[],
-        transfersName: [] as string[],
+        allTickets : [] as ITicket[],       // Массив со всеми билетами (на основе которого будем фильтровать) - неизменяемый массив
+        ticketsChecking: [] as ITicket[],   // Массив (вспомогательный) для проверки - сколько осталось отфильтрованных билетов после загрузки новых билетов
+        filteredCompanies: [] as string[],  // Переменная, содержащая компании, по которым ставится фильтр
+        filteredTransfers: [] as number[],  // Переменная, содержащая перечень кол-ва пересадок, по которому ставится фильтр
+        transfersName: [] as string[],      // Переменная со строковыми наименованиями пересадок
         sorting: '',
         status: '',
-        error: '',
+        messageChecking: '',
     },
     reducers: {
         sortSwitch(state, action: PayloadAction<string>) {
@@ -47,7 +48,7 @@ const dataSlice = createSlice({
                 state.filteredCompanies = state.filteredCompanies.filter((c) => c !== company);     // Удаляем фильтр из переменной если он там был
             }
 
-            if (state.filteredCompanies.length || state.filteredTransfers.length) {                 // Ставим все фильтры, которые есть
+            if (state.filteredCompanies.length || state.filteredTransfers.length) {                 // Ставим все фильтры, которые включены
                 state.tickets = state.allTickets.filter((ticket) => {
                     return (
                         state.filteredCompanies.length === 0 || state.filteredCompanies.includes(ticket.company)
@@ -57,6 +58,7 @@ const dataSlice = createSlice({
                 });
             }
 
+            state.ticketsChecking = state.tickets;
             if (!state.filteredCompanies.length && !state.filteredTransfers.length) state.tickets = state.allTickets;  // Если все фильтры отключены, то показываем все билеты
 
             if (state.sorting !== '' && sortingFunctions[state.sorting])                            // Проверка: содержит ли переменная с сортировкой какое-либо значение
@@ -73,7 +75,7 @@ const dataSlice = createSlice({
                 state.transfersName = state.transfersName.filter((c) => c !== transfersName);
             }
 
-            if (state.filteredCompanies.length || state.filteredTransfers.length) {
+            if (state.filteredCompanies.length || state.filteredTransfers.length) {                 // Ставим все фильтры, которые включены
                 state.tickets = state.allTickets.filter((ticket) => {
                     return (
                         state.filteredCompanies.length === 0 || state.filteredCompanies.includes(ticket.company)
@@ -83,6 +85,7 @@ const dataSlice = createSlice({
                 });
             }
 
+            state.ticketsChecking = state.tickets;
             if (!state.filteredTransfers.length && !state.filteredCompanies.length) state.tickets = state.allTickets;
 
             if (state.sorting !== '' && sortingFunctions[state.sorting])
@@ -109,12 +112,18 @@ const dataSlice = createSlice({
                     });
                 }
 
+                if (state.tickets.length === state.ticketsChecking.length) {
+                    state.messageChecking = 'load more';
+                } else {
+                    state.messageChecking = '';
+                }
+
+                state.ticketsChecking = state.tickets;
                 if (state.sorting !== '' && sortingFunctions[state.sorting])                        // Проверка: содержит ли переменная с сортировкой какое-либо значение
                     state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);    // Если содержит, то выполняем сортировку (после загрузки доп-х билетов)
             })
-            .addCase(fetchTicketsAsync.rejected, (state, action) => {
+            .addCase(fetchTicketsAsync.rejected, (state) => {
                 state.status = 'download failed';
-                state.error = action.error.message ? action.error.message : '';
             });
     },
 });

@@ -1,0 +1,30 @@
+@import "/src/styles/_colors";
+@import "/src/styles/_variables";
+
+.message {
+    font-size: $font-size-medium;
+    color: $base-purple;
+    font-weight: 700;
+    margin-bottom: 20px;
+
+    .arrow {
+        width: 50px;
+        padding-left: 30px;
+        rotate: 90deg;
+        font-size: 32px;
+        margin: 0 auto;
+        animation: run 1.25s infinite ease-in-out;
+
+        @keyframes run {
+            0% {
+                transform: translate(-15%);
+            }
+            50% {
+                transform: translate(30%);
+            }
+            100% {
+                transform: translate(-15%); 
+            }
+        }
+    }
+}

@@ -7,6 +7,7 @@ interface TicketProps {
 }
 
 const Ticket = ({ ticketData }: TicketProps): JSX.Element => {
+
     return (
         <div className={styles.ticket}>
             <div className={styles.price}>
@@ -17,7 +18,7 @@ const Ticket = ({ ticketData }: TicketProps): JSX.Element => {
                     `}
                 </span>
                 <div className={styles.logo}>
-                    <img className={styles.imgLogo} src={`src/images/png/${ticketData.company.toLocaleLowerCase()}.png`} alt={ticketData.company} />
+                    <img className={styles.imgLogo} src={`images/png/${ticketData.company.toLocaleLowerCase()}.png`} alt={ticketData.company} />
                 </div>
             </div>
             <div className={styles.info}>

@@ -14,6 +14,7 @@ import CheckboxGroup from '../Common/CheckboxGroup/checkboxGroup';
 import TicketGroup from '../Common/TicketGroup/ticketGroup';
 import DropdownMenu from '../DropdownMenu/dropdownMenu';
 import Loader from '../Common/Loader/loader';
+import Message from '../Common/Message/message';
 import { ITicket } from '../../types/ticketsType';
 
 export interface MainProps {
@@ -23,6 +24,7 @@ export interface MainProps {
 const Main = ({ ticketsData }: MainProps) => {
     const dispatch = useDispatch<RootDispatch>();
     const loading = useSelector((state: RootState) => state.dataTickets.status);
+    const messageChecking = useSelector((state: RootState) => state.dataTickets.messageChecking);
 
     return (
         <main className={styles.main}>
@@ -51,6 +53,8 @@ const Main = ({ ticketsData }: MainProps) => {
                         {
                             loading === 'in progress'
                             ? <Loader />
+                            : messageChecking === 'load more'
+                            ? <Message />
                             : null
                         }
                     <Button size={'large'} color={'purple'} border={'rounded'} /* style={{fontSize: '24px'}} */ children={'Загрузить еще билеты'} onClick={() => dispatch(fetchTicketsAsync())}/>
