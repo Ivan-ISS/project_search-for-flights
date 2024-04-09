@@ -60,6 +60,7 @@ const dataSlice = createSlice({
 
             state.ticketsChecking = state.tickets;
             if (!state.filteredCompanies.length && !state.filteredTransfers.length) state.tickets = state.allTickets;  // Если все фильтры отключены, то показываем все билеты
+            state.messageChecking = '';
 
             if (state.sorting !== '' && sortingFunctions[state.sorting])                            // Проверка: содержит ли переменная с сортировкой какое-либо значение
                 state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);        // Если содержит, то выполняем сортировку
@@ -87,6 +88,7 @@ const dataSlice = createSlice({
 
             state.ticketsChecking = state.tickets;
             if (!state.filteredTransfers.length && !state.filteredCompanies.length) state.tickets = state.allTickets;
+            state.messageChecking = '';
 
             if (state.sorting !== '' && sortingFunctions[state.sorting])
                 state.tickets = state.tickets.slice().sort(sortingFunctions[state.sorting]);
