@@ -31,13 +31,13 @@ __Интерфейс приложения__ представлен элемен�
 - инпуты (тип radio) *"Название авиакомпании"* - для фильтрации по авиакомпании.<br>
 
 ## Технологии:
-<img src="https://img.shields.io/badge/HTML5-red?logo=html5&logoColor=white" alt="HTML5"/>&nbsp;
-<img src="https://img.shields.io/badge/CSS3-blue?logo=css3&logoColor=white" alt="CSS3"/>&nbsp;
-<img src="https://img.shields.io/badge/-Sass-DB7093?logo=sass&logoColor=white" alt="SASS"/>&nbsp;
 <img src="https://img.shields.io/badge/-TypeScript-blue?logo=typescript&logoColor=white" alt="TS"/>&nbsp;
 <img src="https://img.shields.io/badge/-JavaScript-f0db4f?logo=javaScript&logoColor=black" alt="JS"/>&nbsp;
 <img src="https://img.shields.io/badge/-React-000000?logo=React&logoColor=#00fff" alt="React"/>&nbsp;
 <img src="https://img.shields.io/badge/-Redux-8a2eb2?logo=Redux&logoColor=#00fff" alt="Redux"/>&nbsp;
+<img src="https://img.shields.io/badge/HTML5-red?logo=html5&logoColor=white" alt="HTML5"/>&nbsp;
+<img src="https://img.shields.io/badge/-Sass-DB7093?logo=sass&logoColor=white" alt="SASS"/>&nbsp;
+<img src="https://img.shields.io/badge/CSS3-blue?logo=css3&logoColor=white" alt="CSS3"/>&nbsp;
 
 ## В проекте реализованы функциональные требования:
 
